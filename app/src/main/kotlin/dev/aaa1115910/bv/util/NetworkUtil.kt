@@ -35,17 +35,8 @@ object NetworkUtil {
         val deferreds = locCheckUrls.map { locCheckUrl ->
             async {
                 runCatching {
-                    val result = client.get(locCheckUrl).bodyAsText()
-                    logger.info { "Network result:\n$result" }
-
-                    val networkCheckResult = result
-                        .lines()
-                        .filter { it.isNotBlank() }
-                        .associate { with(it.split("=")) { this[0] to this[1] } }
-
-                    require(networkCheckResult["loc"] != "CN") { "BV doesn't support use in mainland China" }
                     false
-                }.getOrDefault(true)
+                }.getOrDefault(false)
             }
         }
 
